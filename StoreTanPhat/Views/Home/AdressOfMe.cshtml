@@ -1,0 +1,35 @@
+﻿@model IEnumerable<StoreTanPhat.Models.DiaChiKhachHang>
+
+@if(ViewBag.Error != null)
+{
+    <span>@ViewBag.Error</span>
+}
+<div class="container mt-3">
+    <a href="@Url.Action("AddAdress","Home")" class="btn btn-primary">Thêm mới địa chỉ</a>
+    <div class="row mt-3">
+        @foreach (var item in Model)
+        {
+            <div class="col-3">
+                <div class="card border-success mb-3">
+                    <div class="card-body text-success">
+                        <h5 class="card-title">Địa chỉ @item.ID_DiaChi</h5>
+                        <p class="card-text">@item.DiaChi - @item.Xa.name - @item.Huyen.name - @item.Tinh.name</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-success">
+                        @if (item.TrangThai == 1)
+                        {
+                            <a class="btn btn-success m-auto">Đang sử dụng</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("UpdateAdress","Home", new { id = item.ID_DiaChi })" class="btn btn-danger m-auto">Kích hoạt</a>
+                            <a href="@Url.Action("DeleteAdress","Home", new { id = item.ID_DiaChi })" class="btn btn-danger m-auto">Xóa</a>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+

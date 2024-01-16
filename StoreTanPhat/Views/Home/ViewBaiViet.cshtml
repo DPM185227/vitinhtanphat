@@ -1,0 +1,12 @@
+﻿@model StoreTanPhat.Models.BaiViet
+<div class="container">
+    <h3 class="mt-3">@Model.TieuDe</h3>
+    <p>
+        <span>Lượt xem: @Model.LuotXem</span>
+    </p>
+    <span>@Model.MieuTaNgan</span>
+    <span class="mb-3">
+        @Html.Raw(Model.NoiDung)
+    </span>
+</div>
+

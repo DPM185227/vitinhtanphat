@@ -1,0 +1,44 @@
+﻿@model IEnumerable<StoreTanPhat.Models.GioHang>
+
+@{
+    int total = 0;
+    int count = ViewBag.CountSumProduct;
+}
+<div class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+        <i class="fa fa-shopping-cart"></i>
+        <span>Giỏ Hàng</span>
+        <div class="qty">@count</div>
+    </a>
+    <div class="cart-dropdown">
+        <div class="cart-list">
+            @foreach (var item in Model)
+            {
+                <div class="product-widget">
+                    <div class="product-img">
+                        <img src="~/@item.SanPham.HinhAnhDaiDien" alt="">
+                    </div>
+                    <div class="product-body">
+                        <h3 class="product-name"><a href="#">@item.SanPham.TenSanPham</a></h3>
+                        <h4 class="product-price"><span class="qty">x @item.SoLuong</span>@item.SanPham.GiaBan.ToString("N0")đ</h4>
+                        @{
+                            total += item.SoLuong * item.SanPham.GiaBan;
+                        }
+                    </div>
+                    <button onclick="location.href='@Url.Action("DeleteToCart","Home",new{ id = item.ID_SanPham })'" class="delete"><i class="fa fa-close"></i></button>
+                </div>
+            }
+        </div>
+        <div class="cart-summary">
+            <small>@count Sản Phẩm Được Chọn</small>
+            <h5>Tổng Tiên: @total.ToString("N0")đ</h5>
+        </div>
+        @if (count > 0)
+        {
+            <div class="cart-btns" style="width:605px;">
+                <a href="@Url.Action("CheckOut","Home")">Thanh Toán  <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        }
+
+    </div>
+</div>

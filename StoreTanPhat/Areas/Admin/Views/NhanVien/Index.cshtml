@@ -1,0 +1,110 @@
+﻿@model IEnumerable<StoreTanPhat.Models.NhanVien>
+@using StoreTanPhat.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        a:hover {
+            color: white;
+            text-decoration: none;
+        }
+</style>
+<div class="card mt-3 border border-success shadow">
+    <h5 class="card-header bg-success text-white">@ViewBag.Title</h5>
+    <div class="card-body">
+        <p class="btn btn-primary text-white">
+            @Html.ActionLink("Tạo mới", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TenNhanVien)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DiaChiNhanVien)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NamSinhNhanVien)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GmailNhanVien)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TenDangNhapNV)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HinhAnhNV)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.QuyenNhanVien)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenNhanVien)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiaChiNhanVien)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NamSinhNhanVien)
+                    </td>
+                    <td>
+                        <span>@item.GmailNhanVien</span>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenDangNhapNV)
+                    </td>
+                    <td>
+                        <img src="~/@item.HinhAnhNV" width="100" />
+                    </td>
+                    <td>
+                        @if (item.QuyenNhanVien == 0)
+                        {
+                            <span class="badge bg-danger">ADMIN</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-info">Nhân viên</span>
+                        }
+                    </td>
+                    <td>
+                        @{
+                            var sanPham = (List<SanPham>)ViewBag.SanPham;
+                            var baiViet = (List<BaiViet>)ViewBag.BaiViet;
+                            var phanHoiBinhLuan = (List<PhanHoiBinhLuan>)ViewBag.PhanHoiBinhLuan;
+
+                            var checksanPham = sanPham.Where(m => m.ID_NhanVien == item.ID_NhanVien).FirstOrDefault();
+                            var checkbaiViet = baiViet.Where(m => m.Id_NhanVien == item.ID_NhanVien).FirstOrDefault();
+                            var checkPhanHoi = phanHoiBinhLuan.Where(m => m.ID_NhanVien == item.ID_NhanVien).FirstOrDefault();
+                        }
+                        @if (checkbaiViet != null || checksanPham != null || checkPhanHoi != null)
+                        {
+                            <a class="btn btn-info text-white" href="@Url.Action("Edit", "NhanVien", new { id = item.ID_NhanVien })">Sửa</a>
+                        }
+                        else
+                        {
+                            <!--truyền id qua Hàm Edit-->
+                            <a class="btn btn-info text-white" href="@Url.Action("Edit", "NhanVien", new { id = item.ID_NhanVien })">Sửa</a> <span>|</span> 
+                            <a class="btn btn-danger text-white" href="@Url.Action("Delete", "NhanVien", new { id = item.ID_NhanVien })">Xóa</a>
+                        }
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

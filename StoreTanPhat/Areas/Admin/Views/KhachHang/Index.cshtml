@@ -1,0 +1,118 @@
+﻿@model IEnumerable<StoreTanPhat.Models.KhachHang>
+@using StoreTanPhat.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        a:hover {
+            color: white;
+            text-decoration: none;
+        }
+</style>
+<div class="card mt-3 border border-success shadow">
+    <h5 class="card-header bg-success text-white">@ViewBag.Title</h5>
+    <div class="card-body">
+        <p class="btn btn-primary text-white">
+            @Html.ActionLink("Tạo mới", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.HoTen)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoDienThoai)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GioiTinh)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NamSinh)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Gmail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TenDangNhap)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HinhAnh)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoDienThoai)
+            </td>
+            <td>
+                @if (item.GioiTinh == 0)
+                {
+                    <span class="badge bg-primary">Nam</span>
+                }
+                else
+                {
+                    <span class="badge bg-primary">Nữ</span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NamSinh)
+            </td>
+            <td>
+                <span>@item.Gmail</span>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenDangNhap)
+            </td>
+            <td>
+                <img src="~/@item.HinhAnh" width="100" />
+            </td>
+            <td>
+                @{
+                    var diaChi = (List<DiaChiKhachHang>)ViewBag.DiaChi;
+                    var yeuThich = (List<YeuThich>)ViewBag.YeuThich;
+                    var datHang = (List<DatHang>)ViewBag.DatHang;
+                    var phanHoi = (List<PhanHoiBinhLuan>)ViewBag.PhanHoiBinhLuan;
+                    var gioHang = (List<GioHang>)ViewBag.GioHang;
+
+                    var CheckdiaChi = diaChi.Where(m => m.ID_KhachHang == item.ID_KhachHang).FirstOrDefault();
+                    var CheckyeuThich = yeuThich.Where(m => m.Id_KhachHang == item.ID_KhachHang).FirstOrDefault();
+                    var CheckdatHang = datHang.Where(m => m.ID_KhachHang == item.ID_KhachHang).FirstOrDefault();
+                    var CheckphanHoi = phanHoi.Where(m => m.ID_KhachHang == item.ID_KhachHang).FirstOrDefault();
+                    var checkGioHang = gioHang.Where(m => m.ID_KhachHang == item.ID_KhachHang).FirstOrDefault();
+                }
+                @if (checkGioHang != null || CheckdatHang != null || CheckdatHang != null || CheckdiaChi != null || CheckphanHoi != null || CheckyeuThich != null)
+                {
+                    <a class="btn btn-info text-white" href="@Url.Action("Edit", "KhachHang", new { id = item.ID_KhachHang })">Sửa</a>
+
+                }
+                else
+                {
+                    <a class="btn btn-info text-white" href="@Url.Action("Edit", "KhachHang", new { id = item.ID_KhachHang })">Sửa</a> <span>|</span>
+                    <a class="btn btn-danger text-white" href="@Url.Action("Delete", "KhachHang", new { id = item.ID_KhachHang })">Xóa</a>
+                }
+            </td>
+            <td>
+                @{
+                    var adress_tick = diaChi.Where(m => m.ID_KhachHang == item.ID_KhachHang && m.TrangThai == 1).FirstOrDefault();
+                }
+            </td>
+        </tr>
+            }
+
+        </table>
+    </div>
+</div>

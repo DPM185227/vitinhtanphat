@@ -1,0 +1,15 @@
+﻿@{ 
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<form action="@Url.Action("Chart","Home")" method="post">
+    <div class="card">
+        <h5 class="card-header">THỐNG KÊ THEO NGÀY</h5>
+        <div class="card-body">
+            <label class="control-label">Ngày Bắt Đầu</label>
+            <input type="date" name="StartDay" class="form-control" />
+            <label class="control-label">Ngày Bắt Đầu</label>
+            <input type="date" name="EndDay" class="form-control" />
+            <input type="submit" value="Lọc" class="mt-3 btn btn-primary" />
+        </div>
+    </div>
+</form>

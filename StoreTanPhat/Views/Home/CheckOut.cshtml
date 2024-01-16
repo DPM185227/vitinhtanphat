@@ -1,0 +1,133 @@
+﻿@model StoreTanPhat.Models.DatHang
+@{
+    ViewBag.Title = "CheckOut";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var list_product = (List<GioHang>)ViewBag.Cart;
+    int sum = 0;
+    int total = 0;
+    int shipping = 0;
+    var phiVanChuyen = (PhiVanChuyen)ViewBag.PhiVanChuyen;
+    if(ViewBag.PhiVanChuyen != null)
+    {
+        shipping = Convert.ToInt32(phiVanChuyen.GiaVanChuyen);
+    }
+    else
+    {
+        shipping = 50000 * list_product.Count();
+    }
+    int allsum = 0;
+    var diachi = (DiaChiKhachHang)ViewBag.Adress;
+    string diachi_nguoinhan = diachi.DiaChi.ToString() +" - "+ diachi.Xa.name + " - " + diachi.Huyen.name + " - " + diachi.Tinh.name;
+}
+@using StoreTanPhat.Models;
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="breadcrumb-header">Checkout</h3>
+                <ul class="breadcrumb-tree">
+                    <li><a href="#">Home</a></li>
+                    <li class="active">Checkout</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /BREADCRUMB -->
+<!-- SECTION -->
+@using (Html.BeginForm("CheckOut", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-7">
+                    <!-- /Billing Details -->
+                    @if (ViewBag.Error != null)
+                    {
+                        <span>@ViewBag.Error</span>
+                    }
+                    <!-- Shiping Details -->
+                    <div class="shiping-details">
+                        <div class="caption">
+                            <div class="form-group">
+                                <label class="control-label">Họ tên</label>
+                                <input class="input" type="text" name="HoTenNguoiNhan" placeholder="@diachi.KhachHang.HoTen" value="@diachi.KhachHang.HoTen">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Số điện thoại</label>
+                                <input class="input" type="tel" name="SoDienThoai" placeholder="@diachi.KhachHang.SoDienThoai" value="@diachi.KhachHang.SoDienThoai">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Địa chỉ giao hàng: <p style="color:red;margin-top:15px;">@diachi_nguoinhan</p></label>
+                            </div>
+
+                            <input type="submit" value="Xác nhận" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+                <!-- /Shiping Details -->
+                <!-- Order notes -->
+                <!-- /Order notes -->
+
+            <!-- Order Details -->
+            <div class="col-md-5 order-details">
+                <div class="section-title text-center">
+                    <h3 class="title">ĐƠN HÀNG CỦA BẠN</h3>
+                </div>
+                <div class="order-summary">
+                    <div class="order-col">
+                        <div><strong>SẢN PHẨM</strong></div>
+                        <div><strong>TỔNG TIỀN</strong></div>
+                    </div>
+                    <div class="order-products">
+                        @foreach (var item in list_product)
+                        {
+                            <div class="order-col">
+                                <div>
+                                    <img src="~/@item.SanPham.HinhAnhDaiDien" width="100" />
+                                </div>
+                                <div>@item.SanPham.TenSanPham <span><p>Số lượng: <b style="font-size:18px;">x @item.SoLuong</b></p></span></div>
+                                @{
+                                    sum = item.SoLuong * item.SanPham.GiaBan;
+                                    total += sum;
+                                }
+                                <div>@sum.ToString("N0")đ</div>
+                            </div>
+                            <hr />
+                        }
+                    </div>
+
+                    <div class="order-col">
+                        <div>PHÍ VẬN CHUYỂN</div>
+                        <div><strong>@shipping.ToString("N0")đ</strong></div>
+                    </div>
+                    @{
+                        allsum = total + shipping;
+                    }
+                    <div class="order-col">
+                        <div><strong>TỔNG TIỀN:</strong></div>
+                        <div><strong class="order-total">@allsum.ToString("N0")đ</strong></div>
+                    </div>
+
+                    <input type="hidden" value="@shipping" name="Shipping" />
+                    <input type="hidden" value="@diachi_nguoinhan" name="Adress" />
+
+                </div>
+            </div>
+                </div>
+            <!-- /Order Details -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+    <!-- /SECTION -->
+}

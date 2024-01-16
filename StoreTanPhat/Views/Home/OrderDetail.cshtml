@@ -1,0 +1,33 @@
+﻿@model IEnumerable<StoreTanPhat.Models.DatHangChiTiet>
+@{
+    ViewBag.Title = "Đơn chi tiết";
+    // danh sách Thongtinkythuat
+}
+
+<div class="card mt-3 shadow border border-info">
+    <h5 class="card-header bg-info text-white text-center font-weight-bold mt-3">@ViewBag.Title</h5>
+    <div class="card-body">
+        <div class="card-deck">
+            @foreach (var item in Model)
+            {
+                // truy xuất giữa các bảng
+                <div class="col-12">
+                    <div class="row mt-3">
+                        <img src="~/@item.SanPham.HinhAnhDaiDien" alt="@item.SanPham.TenSanPham" width="400" height="400" class="col-3">
+                        <div class="card-body col-7">
+                            <h5 class="font-weight-light text-center">Mã Đặt hàng: @item.DatHang.ID_DatHang</h5>
+                            <hr />
+                            <h5>Thông tin sản phẩm</h5>
+                            <hr />
+                            <h5>Tên sản phẩm: <b style="font-weight:bold;font-size:20px;">@item.SanPham.TenSanPham</b></h5>
+                            <h5 class="font-weight-light text-dark">Đơn giá: <b style="font-weight:bold;font-size:20px;">@item.DonGia.ToString("N0")đ</b></h5>
+                            <h5 class="font-weight-light text-dark">Số lượng: <b style="font-weight:bold;font-size:20px;">@item.SoLuong</b></h5>
+                            <hr />
+                            <h5 class="font-weight-lighter text-right text-dark">Thành tiền: <b style="font-size:20px;color:black;">@item.TongTien.ToString("N0")đ</b></h5>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

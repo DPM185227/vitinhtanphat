@@ -1,0 +1,45 @@
+﻿@model IEnumerable<StoreTanPhat.Models.DanhMucSanPham>
+<!-- NAVIGATION -->
+<nav id="navigation">
+    <!-- container -->
+    <div class="container">
+        <!-- responsive-nav -->
+        <div id="responsive-nav">
+            <!-- NAV -->
+            <ul class="main-nav nav navbar-nav" style="display:block;">
+                <li style="margin-top:9px;"><a href="@Url.Action("Index","Home")">Home</a></li>
+                @foreach (var item in Model)
+                {
+                    <li style="margin-top:10px;"><a href="@Url.Action("FitterCatelogy","Home",new { id = item.ID_DanhMuc })">@item.TenDanhMuc</a></li>
+                }
+                @if (Session["ID_Customer"] != null)
+                {
+                    <li class="nav-item dropdown" style="margin-left:650px">
+                        <a class="nav-link dropdown-toggle text-black" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+                            <img src="~/@Session["HinhAnh"]" width="50" /> @Session["HoTen"]
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="@Url.Action("Profiles","Home")">Thông Tin Tài Khoản</a>
+                            <a class="dropdown-item" href="@Url.Action("OrderOfMe","Home")">Đơn Hàng Của Tôi</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("AdressOfMe","Home")">Địa Chỉ Giao Hàng</a>
+                            <a class="dropdown-item" href="@Url.Action("DoiMatKhau","Home")">Đổi Mật Khẩu</a>
+                            <a class="dropdown-item" href="@Url.Action("DangXuat","Home")">Đăng Xuất</a>
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    <a class="nav-link text-black" href="@Url.Action("Login","Home")" style="margin-left: 1030px;margin-top:24px;">
+                        Đăng Nhập
+                    </a>
+                }
+
+            </ul>
+            <!-- /NAV -->
+        </div>
+        <!-- /responsive-nav -->
+    </div>
+    <!-- /container -->
+</nav>
+<!-- /NAVIGATION -->

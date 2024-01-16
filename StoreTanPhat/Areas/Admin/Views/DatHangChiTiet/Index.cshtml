@@ -1,0 +1,75 @@
+﻿@model IEnumerable<StoreTanPhat.Models.DatHangChiTiet>
+@using StoreTanPhat.Models;
+@{
+    ViewBag.Title = "CHI TIẾT ĐƠN HÀNG ";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+    var Order = (DatHang)ViewBag.DatHang;
+}
+<script>
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+</script>
+<div class="card border-danger">
+        <h5 class="card-header bg-danger text-white">@ViewBag.Title</h5>
+        <div class="card-body">
+            <div id="Print">
+                <h5 class="text-center" style="font-family:Verdana, Geneva, Tahoma, sans-serif;font-weight:bold">CỬA HÀNG VI TÍNH TẤN PHÁT</h5>
+                <h5 class="text-center" style="font-family:Verdana, Geneva, Tahoma, sans-serif;font-weight:bold">ĐỊA CHỈ: Thửa 365,  Xẻo Trôm 1, 2 - Mỹ Phước - TP.Long Xuyên</h5>
+                <h5 class="text-center"></h5>
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SanPham.TenSanPham)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DonGia)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SoLuong)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TongTien)
+                        </th>
+                        <th></th>
+                    </tr>
+                    <p class="">Họ và tên: <b>@Order.KhachHang.HoTen</b></p>
+                    <p class="">Địa chỉ: <b>@Order.DiaChiGiaoHang</b></p>
+                    <p class="">Số điện thoại: <b>@Order.SoDienThoai</b></p>
+                    <p class="">Tổng tiền : <b>@Order.TongTien.ToString("N0")đ</b></p>
+                    <p class="">Phí ship : <b>@Order.PhiShip.Value.ToString("N0")đ</b></p>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SanPham.TenSanPham)
+                            </td>
+                            <td>
+                                @item.DonGia.ToString("N0")<span>Đ</span>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SoLuong)
+                            </td>
+                            <td>
+                                @item.TongTien.ToString("N0")<span>Đ</span>
+                            </td>
+                            <td>
+                                <a class="btn btn-info text-white" href="@Url.Action("Delete", "DatHangChiTiet", new { id = item.ID_DatHangChiTiet })">Xóa</a>
+
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <button class="btn btn-primary" onclick="printDiv('Print')">In</button>
+        </div>
+</div>
+

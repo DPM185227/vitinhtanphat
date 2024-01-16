@@ -1,0 +1,51 @@
+﻿@model IEnumerable<StoreTanPhat.Models.HinhAnhSanPham>
+
+@{
+    ViewBag.Title = "Hình ảnh sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    a{
+        color:white;
+    }
+    a:hover {
+        color: white;
+    }
+</style>
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <p class="btn btn-primary">
+            @Html.ActionLink("Tạo mới", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.HinhAnh)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SanPham.TenSanPham)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HinhAnh)
+                    </td>
+                    <td>
+                        <img src="~/@item.HinhAnh" />
+                    </td>
+                    <td>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID_HinhAnhSP })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+
+

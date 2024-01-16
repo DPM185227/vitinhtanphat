@@ -1,0 +1,70 @@
+﻿@model StoreTanPhat.Models.KhachHang
+
+@{
+    ViewBag.Title = "Thông tin khách hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    a {
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+        a:hover {
+            color: black;
+        }
+</style>
+
+<div class="card mt-3 border border-primary shadow">
+    <h5 class="card-header bg-primary text-white">@ViewBag.Title</h5>
+    <div class="card-body">
+        @using (Html.BeginForm("DoiMatKhau", "Home", FormMethod.Post))
+        {
+            if (ViewBag.Error != null)
+            {
+                <p>@ViewBag.Error</p>
+            }
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.ID_KhachHang)
+            @Html.HiddenFor(model => model.HoTen)
+
+            @Html.HiddenFor(model => model.SoDienThoai)
+
+            @Html.HiddenFor(model => model.GioiTinh)
+
+            @Html.HiddenFor(model => model.NamSinh)
+
+            @Html.HiddenFor(model => model.TenDangNhap)
+
+            @Html.HiddenFor(m => m.TenDangNhap)
+            @Html.HiddenFor(m=>m.Gmail)
+            @Html.HiddenFor(m=>m.TinhTrang)
+
+            <input type="hidden" value="@Model.MatKhau" name="OldPass"/>
+
+            <label>Mật Khẩu Củ</label>
+            <input type="password" name="MatKhauCu" class="form-control" />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MatKhau)
+                @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                <input value="@Model.MatKhau" type="hidden" name="OldPass" />
+            </div>
+
+            @Html.HiddenFor(m => m.HinhAnh)
+
+            <div class="form-group mt-3">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Lưu lại" class="btn btn-primary" style="font-weight:bold;" /> OR <span class="btn btn-info">@Html.ActionLink("Back to List", "Index")</span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

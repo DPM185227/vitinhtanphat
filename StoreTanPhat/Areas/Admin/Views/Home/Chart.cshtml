@@ -1,0 +1,44 @@
+﻿@{ 
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int doanhThu = (int)@ViewBag.DoanhThu;
+    int soLuongsanPham = (int)ViewBag.SoLuongSanPhamDaBan;
+    int soDonHang = (int)ViewBag.SoDonHang;
+}
+<script>
+window.onload = function () {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "dark2", // "light1", "light2", "dark1", "dark2"
+	title: {
+		text: "SƠ ĐỒ THỐNG KÊ"
+	},
+	axisY: {
+		title: "Doanh thu",
+		logarithmic: true
+	},
+	data: [{
+		type: "column",
+		indexLabelFontColor: "white",
+		indexLabel: "{y}",
+		indexLabelFontSize: 16,
+		yValueFormatString: "#,##0.# đ",
+		toolTipContent: "<b>{label}: {y}</b> miles",
+		dataPoints:  @Html.Raw(ViewBag.DataPoints)
+	}]
+});
+chart.render();
+
+}
+</script>
+<div class="card border border-primary">
+	<h5 class="card-header bg-primary text-white">THỐNG KÊ</h5>
+    <div class="card-body">
+        <p class="card-text">TỔNG DOANH THU:<b>@doanhThu.ToString("N0")đ</b></p>
+        <p class="card-text">TỔNG SẢN PHẨM:<b>@soLuongsanPham</b></p>
+        <p class="card-text">TỔNG ĐƠN HÀNG:<b>@soDonHang</b></p>
+        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		<a href="@Url.Action("ThongKe","Home")" class="btn btn-primary mt-3">Trở về thống kê</a>
+    </div>
+</div>

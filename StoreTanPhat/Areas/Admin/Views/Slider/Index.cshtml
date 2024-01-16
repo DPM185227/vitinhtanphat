@@ -1,0 +1,101 @@
+﻿@model IEnumerable<StoreTanPhat.Models.Slider>
+@using StoreTanPhat.Models
+@{
+    ViewBag.Title = "QUẢN LÝ SLIDER";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    a{
+        color:white;
+    }
+    a:hover{
+        color:white;
+    }
+</style>
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <p class="btn btn-primary">
+            @Html.ActionLink("Thêm Mới", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TenSilder)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HinhAnh)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ViTri)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HienThi)
+                </th>
+                <th>
+                    Sản phẩm liên quan
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenSilder)
+                    </td>
+                    <td>
+                        <img src="~/@item.HinhAnh" width="200" />
+                    </td>
+                    <td>
+                        @if (item.ViTri == 0)
+                        {
+                            <span>Đầu trang</span>
+                        }
+                        else if (item.ViTri == 1)
+                        {
+                            <span>Giữa trang</span>
+                        }
+                        else
+                        {
+                            <span>Cuối trang</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.HienThi == 0)
+                        {
+                            <span>Ẩn đi</span>
+                        }
+                        else
+                        {
+                            <span>Hiện ra</span>
+                        }
+                    </td>
+                    <td>
+                        @{
+                            var product = (List<SanPhamLienQuan>)ViewBag.Product;
+                        }
+                        <a href="@Url.Action("Index","SanPhamLienQuan",new { id = item.Id_Slider })" class="btn btn-primary">@product.Where(m => m.ID_Slider == item.Id_Slider).Count() Sản phẩm</a>
+                    </td>
+                    <td>
+                        @if (product.Where(m => m.ID_Slider == item.Id_Slider).FirstOrDefault() != null)
+                        {
+                            <a class="btn btn-info text-white" href="@Url.Action("Edit", "Slider", new { id = item.Id_Slider })">Sửa</a>
+                        }
+                        else
+                        {
+                            <!--truyền id qua Hàm Edit-->
+                            <a class="btn btn-info text-white" href="@Url.Action("Edit", "Slider", new { id = item.Id_Slider })">Sửa</a> <span>|</span>
+                            <!--truyền id qua Hàm Delete-->
+                            <a class="btn btn-danger text-white" href="@Url.Action("Delete", "Slider", new { id = item.Id_Slider })">Xóa</a>
+                        }
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+

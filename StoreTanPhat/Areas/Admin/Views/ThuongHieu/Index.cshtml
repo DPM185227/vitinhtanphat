@@ -1,0 +1,81 @@
+﻿@model IEnumerable<StoreTanPhat.Models.ThuongHieu>
+@using StoreTanPhat.Models; 
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    a{
+        color:white;
+        text-decoration:none;
+        font-weight:bold;
+    }
+    a:hover{
+        color:white;
+        text-decoration:none;
+    }
+</style>
+<div class="card mt-3 border border-success shadow">
+    <h5 class="card-header bg-success text-white">@ViewBag.Title</h5>
+    <div class="card-body">
+        <p class="btn btn-primary text-white">
+            @Html.ActionLink("Tạo mới", "Create")
+        </p>
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TenThuongHieu)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TinhTrangHienThi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HinhAnh)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenThuongHieu)
+                    </td>
+                    <td>
+                        @if (item.TinhTrangHienThi == 0)
+                        {
+                            <span>Ẳn đi</span>
+                        }
+                        else
+                        {
+                            <span>Hiện ra</span>
+                        }
+                    </td>
+                    <td>
+                        <img src="~/@item.HinhAnh" width="100" />
+                    </td>
+                    <td>
+                        @{
+                            var product = (List<SanPham>)ViewBag.SanPham;
+                            var Check_Exit = product.Where(m => m.ID_ThuongHieu == item.ID_ThuongHieu).FirstOrDefault();
+                        }
+                        @if (Check_Exit != null)
+                        {
+                            <a class="btn btn-info text-white" href="@Url.Action("Edit", "ThuongHieu", new { id = item.ID_ThuongHieu })">Sửa</a>
+                        }
+                        else
+                        {
+                            <!--truyền id qua Hàm Edit-->
+                            <a class="btn btn-info text-white" href="@Url.Action("Edit", "ThuongHieu", new { id = item.ID_ThuongHieu })">Sửa</a> <span>|</span>
+                            <!--truyền id qua Hàm Delete-->
+                            <a class="btn btn-danger text-white" href="@Url.Action("Delete", "ThuongHieu", new { id = item.ID_ThuongHieu })">Xóa</a>
+                        }
+                        
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

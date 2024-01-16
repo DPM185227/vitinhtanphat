@@ -1,0 +1,102 @@
+﻿@model IEnumerable<StoreTanPhat.Models.Footer>
+@using StoreTanPhat.Models;
+@{
+    var list_cate = (List<DanhMucSanPham>)ViewBag.CateLogy;
+}
+<footer id="footer">
+    <!-- top footer -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+
+                <div class="col-md-4 col-xs-6">
+                    <div class="footer">
+                        <ul class="footer-links">
+                            <div class="fb-page" data-href="https://www.facebook.com/vitinhtanphat.vn" data-tabs="timeline" data-width="1000" data-height="200" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/vitinhtanphat.vn" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/vitinhtanphat.vn">Cửa Hàng Linh Kiện Vi Tính Tấn Phát</a></blockquote></div>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3 col-xs-6">
+                    <div class="footer">
+                        <h3 class="footer-title">LIÊN HỆ VỚI CHÚNG TÔI</h3>
+                        <ul class="footer-links">
+                            <li>Thông tin liên hệ</li>
+                            <li>Xẻo Trôm 1, 2  - Mỹ Phước - TP.Long Xuyên</li>
+                            <li>0972.931.007</li>
+                            <li>hotanphatcntt@gmail.com</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-xs-6">
+                    <div class="footer">
+                        <ul class="footer-links">
+                            <div class="row">
+                                @foreach (var item in Model.Take(5))
+                                {
+                                <li><a href="@Url.Action("ViewFooter","Home",new { id = item.ID_Footer})">@item.TenFooter</a></li>
+                            }
+                        </div>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="col-md-2 col-xs-6">
+                    <div class="footer">
+                        <ul class="footer-links">
+                            <div class="row">
+                                @foreach (var item in list_cate.Take(5))
+                                {
+                                <li><a href="@Url.Action("FitterCatelogy","Home",new { id = item.ID_DanhMuc})">@item.TenDanhMuc</a></li>
+                            }
+                        </div>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="clearfix visible-xs"></div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3924.719045584311!2d105.4382624153148!3d10.364334669497453!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310a73b855a534bf%3A0x759ec399fed1c494!2zVmkgdMOtbmggVOG6pW4gUGjDoXQ!5e0!3m2!1sen!2s!4v1649297987703!5m2!1sen!2s" width="1050" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+        </div>
+        <!-- /top footer -->
+        <!-- bottom footer -->
+        <div id="bottom-footer" class="section">
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <ul class="footer-payments">
+                            <li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
+                            <li><a href="#"><i class="fa fa-credit-card"></i></a></li>
+                            <li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
+                            <li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
+                            <li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
+                            <li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
+                        </ul>
+                        <span class="copyright">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> Webiste thuộc <a href="https://www.facebook.com/dn200119" style="color:white;">Phùng Tuấn Đạt</a> & <a style="color:white;" href="https://www.facebook.com/hyt1702">Huỳnh Tuấn Huy</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </span>
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+        <!-- /bottom footer -->
+    </footer>

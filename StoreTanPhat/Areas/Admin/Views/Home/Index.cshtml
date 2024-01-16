@@ -1,0 +1,168 @@
+﻿@using StoreTanPhat.Models;
+@{ 
+    var sanPham = (List<SanPham>)ViewBag.SanPham;
+    var donHang = (List<DatHang>)ViewBag.DonHang;
+    var datHangchiTiet = (List<DatHangChiTiet>)ViewBag.DatHangChiTiet;
+    var binhLuan = (List<BinhLuan>)ViewBag.BinhLuan;
+    var yeuThich = (List<YeuThich>)ViewBag.YeuThich;
+    var nguoiDung = (List<KhachHang>)ViewBag.NguoiDung;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    //int doanhThuNgay = ViewBag.DoanhThuNgay;
+    int sumOrderToday = (int)ViewBag.DoanhThuNgay;
+    int sumOrderWeek = (int)ViewBag.SumWeek;
+ }
+<script>
+window.onload = function () {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light2", // "light1", "dark1", "dark2"
+	exportEnabled: true,
+    title: {
+        text: "SƠ ĐỒ THỐNG KÊ NGÀY @DateTime.Now.ToShortDateString()"
+	},
+	data: [{
+		type: "column",
+		dataPoints:  @Html.Raw(ViewBag.DataPoints)
+	}]
+});
+chart.render();
+
+}
+</script>
+<!---THỐNG KÊ CƠ BẢN-->
+<div class="row">
+
+    <div class="col-3">
+        <div class="card border border-info">
+            <h5 class="card-header text-center bg-info text-white ">NGƯỜI DÙNG</h5>
+            <div class="card-body">
+                <p class="card-title">TỔNG NGƯỜI DÙNG: @nguoiDung.Count()</p>
+                @{
+                    var khachHangOrder = donHang.OrderByDescending(m => m.ID_KhachHang).FirstOrDefault();
+                }
+                <p class="card-title">KHÁCH HÀNG MUA NHIỀU: @khachHangOrder.KhachHang.HoTen</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-3">
+        <div class="card border border-info">
+            <h5 class="card-header text-center bg-info text-white ">BÌNH LUẬN</h5>
+            <div class="card-body">
+                <p class="card-title">TỔNG BÌNH LUẬN: @binhLuan.Count()</p>
+                <p class="card-title">TỔNG SAO: @binhLuan.Sum(m => m.Star)</p>
+            </div>
+        </div>
+    </div>
+    <!-- card-->
+    <div class="col-3">
+        <div class="card border border-secondary">
+            <h5 class="card-header text-center bg-secondary text-white">SẢN PHẨM</h5>
+            <div class="card-body">
+                <p class="card-title">TỔNG SẢN PHẨM: @sanPham.Count()</p>
+                <p class="card-title">TỔNG SỐ LƯỢNG @sanPham.Sum(m => m.SoLuong)</p>
+                <p class="card-title">
+                    SẢN PHẨM SẮP HẾT:
+                    @{
+                        var product_end = sanPham.Where(m => m.SoLuong < 2).ToList();
+                    }
+                    @if (product_end != null)
+                    {
+                        foreach (var item in product_end)
+                        {
+                        <p class="card-text">@item.TenSanPham</p>
+                    }
+                }
+                else
+                {
+                    <span>0</span>
+                }
+
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--end card-->
+
+        <div class="col-3">
+            <div class="card border border-info">
+                <h5 class="card-header text-center bg-info text-white ">ĐƠN HÀNG</h5>
+                <div class="card-body">
+                    <p class="card-title">TỔNG ĐƠN HÀNG: @donHang.Count()</p>
+                    <p class="card-title">TỔNG DOANH THU @donHang.Sum(m => m.TongTien).ToString("N0")<span>đ</span></p>
+                    <p class="card-title">TỔNG ĐƠN HÀNG ĐÃ HỦY:  @donHang.Count(m => m.TinhTrangDonHang == 2)<span></span></p>
+                    <p class="card-title">TỔNG ĐƠN HÀNG THÀNH CÔNG:  @donHang.Count(m => m.TinhTrangDonHang == 9)<span></span></p>
+                    <p class="card-title">TỔNG SẢN PHẨM ĐÃ BÁN:  @datHangchiTiet.Where(m => m.DatHang.TinhTrangDonHang != 2).Sum(m => m.SoLuong)<span></span></p>
+                </div>
+            </div>
+        </div>
+    <h5>Thống kê</h5>
+        <div class="col-3 m-auto">
+            <div class="card border border-info">
+                <h5 class="card-header text-center bg-info text-white ">THỐNG KÊ NGÀY @DateTime.Now.ToShortDateString()</h5>
+                <div class="card-body">
+                    <p class="card-title">TỔNG THU NHẬP:  @sumOrderToday.ToString("N0")đ<span></span></p>
+                    <p class="card-title">TỔNG ĐƠN HÀNG:  @Convert.ToInt32(ViewBag.sumDonHangToDay)<span></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3 m-auto">
+            <div class="card border border-info">
+                <h5 class="card-header text-center bg-info text-white ">THỐNG KÊ TUẦN</h5>
+                <div class="card-body">
+                    <p class="card-title">TỔNG THU NHẬP:  @sumOrderWeek.ToString("N0")đ<span></span></p>
+                    <p class="card-title">TỔNG ĐƠN HÀNG:  @Convert.ToInt32(ViewBag.sumDonHangToWeek)<span></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="chartContainer" style="height: 370px; width: 100%;margin-top:50px;"></div>
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    </div>
+<!--END-->
+<h5 class="mt-4">TOP SẢN PHẨM BÁN CHẠY</h5>
+<div class="row mt-3">
+    @foreach (var item in datHangchiTiet.OrderByDescending(m=>m.ID_SanPham).Take(4))
+    {
+    <div class="col-3">
+        <div class="card">
+            <img class="card-img-top" src="~/@item.SanPham.HinhAnhDaiDien"  width="100"/>
+            <div class="card-body">
+                <h5 class="card-title">@item.SanPham.TenSanPham</h5>
+                <h5 class="card-title">@item.DonGia.ToString("N0")</h5>
+            </div>
+        </div>
+    </div>
+
+    }
+</div>
+<!-- XÁC NHẬN ĐƠN HÀNG-->
+<h5 class="mt-4">ĐƠN HÀNG ĐANG CHỜ XÁC NHẬN</h5>
+<table class="table table-active mt-3">
+    <tr>
+        <th>MÃ ĐƠN HÀNG</th>
+        <th>KHÁCH HÀNG</th>
+        <th>ĐỊA CHỈ</th>
+        <th></th>
+    </tr>
+    @foreach (var item in donHang.Where(m => m.TinhTrangDonHang == 0))
+    {
+        <tr>
+            <td>
+                @item.ID_DatHang
+            </td>
+            <td>
+                @item.HoTenNguoiNhan
+            </td>
+            <td>
+                @item.DiaChiGiaoHang
+            </td>
+            <td>
+                <a href="@Url.Action("ConfirmOrder","Home", new { id = item.ID_DatHang})" class="btn btn-danger">XÁC NHẬN</a>
+            </td>
+        </tr>
+    }
+</table>

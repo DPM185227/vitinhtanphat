@@ -1,0 +1,67 @@
+﻿@model StoreTanPhat.Models.DiaChiKhachHang
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DiaChiKhachHang</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DiaChi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiaChi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrangThai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Huyen.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Huyen.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KhachHang.HoTen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KhachHang.HoTen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tinh.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tinh.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Xa.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Xa.name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_DiaChi }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,156 @@
+﻿@model PagedList.IPagedList<StoreTanPhat.Models.SanPham>
+@using PagedList.Mvc;
+@using System.Web.Mvc;
+@using StoreTanPhat.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    a {
+        color: black;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        a:hover {
+            color: black;
+            text-decoration: none;
+        }
+</style>
+<div class="card mt-3 border border-success shadow">
+    <h5 class="card-header bg-success text-white">@ViewBag.Title</h5>
+    <div class="card-body">
+        @if (ViewBag.Error != null)
+        {
+            <span>@ViewBag.Error</span>
+        }
+        <p class="btn btn-primary text-white">
+            @Html.ActionLink("Tạo mới", "Create")
+        </p>
+        <div class="text-right" style="overflow: hidden; padding: 1px 0px 0px 0px; margin-top: -47px; margin-bottom: 10px;">
+            <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("ExportToExcel", "SanPham")'">Xuất Ra Excel</button>
+        </div>
+
+        <table class="table">
+            <tr>
+                <th width="200">
+                    Tên sản phẩm
+                </th>
+                <th>
+                    Hình ảnh đại diện
+                </th>
+                <th>
+                    Tình trạng
+                </th>
+                <th>
+                    Bảo hành
+                </th>
+                <th>
+                    Hiển thị
+                </th>
+                <th>
+                    Sản phẩm nổi bật
+                </th>
+                <th>Hình ảnh</th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenSanPham)
+                    </td>
+                    <td>
+                        <img src="~/@item.HinhAnhDaiDien" width="100" />
+                    </td>
+                    <td>
+                        @if (item.TinhTrang == 0)
+                        {
+                            <span class="badge bg-primary">Còn hàng</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Hết hàng</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.BaoHanh == "0")
+                        {
+                            <span class="badge bg-success">12 tháng</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-info">24 tháng</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.TinhTrangHienThi == 0)
+                        {
+                            <span class="badge bg-secondary">Ẩn đi</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning">Hiện ra</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.SanPhamNoiBat == 0)
+                        {
+                            <span class="badge bg-secondary">Nổi bật</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning">Không</span>
+                        }
+                    </td>
+                    <td>
+                        @{
+                            var t = (List<HinhAnhSanPham>)ViewBag.CountImage;
+                            var count = t.Count(m => m.ID_SanPham == item.ID_SanPham);
+                            // check
+                            var hinhAnhSanPham = (List<HinhAnhSanPham>)ViewBag.hinhanhSanPham;
+                            var sanPhamLienQuan = (List<SanPhamLienQuan>)ViewBag.sanPhamLienQuan;
+                            var gioHang = (List<GioHang>)ViewBag.gioHang;
+                            var datHangChiTiet = (List<DatHangChiTiet>)ViewBag.datHangChiTiet;
+                            var yeuThich = (List<YeuThich>)ViewBag.yeuThich;
+                            var binhLuan = (List<BinhLuan>)ViewBag.binhLuan;
+
+
+                            var checkHinhAnh = hinhAnhSanPham.Where(m => m.ID_SanPham == item.ID_SanPham).FirstOrDefault();
+                            var checkSanPhamLienQuan = sanPhamLienQuan.Where(m => m.ID_SanPham == item.ID_SanPham).FirstOrDefault();
+                            var checkgioHang = gioHang.Where(m => m.ID_SanPham == item.ID_SanPham).FirstOrDefault();
+                            var checkDatHangChiTiet = datHangChiTiet.Where(m => m.ID_SanPham == item.ID_SanPham).FirstOrDefault();
+                            var checkYeuThich = yeuThich.Where(m => m.Id_SanPham == item.ID_SanPham).FirstOrDefault();
+                            var checkBinhLuan = binhLuan.Where(m => m.ID_SanPham == item.ID_SanPham).FirstOrDefault();
+                        }
+                        <a href="@Url.Action("ListImage","HinhAnhSanPham",new { id = item.ID_SanPham })" class="btn btn-primary">@count <span>Hình ảnh</span>  </a>
+                    </td>
+                    <td>
+                        @if (checkHinhAnh != null || checkSanPhamLienQuan != null || checkgioHang != null || checkDatHangChiTiet != null || checkYeuThich != null || checkBinhLuan != null)
+                        {
+                            <a class="btn btn-info text-white" href="@Url.Action("Edit", "SanPham", new { id = item.ID_SanPham })">Sửa</a>
+                        }
+                        else
+                        {
+                            <!--truyền id qua Hàm Edit-->
+                            <a class="btn btn-info text-white" href="@Url.Action("Edit", "SanPham", new { id = item.ID_SanPham })">Sửa</a><span>|</span>
+                            <!--truyền id qua Hàm Delete-->
+                            <a class="btn btn-danger text-white" href="@Url.Action("Delete", "SanPham", new { id = item.ID_SanPham })">Xóa</a>
+                        }
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <!-- Thêm phân trang vào -->
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page }))
+        <!-- Kết thúc -->
+    </div>
+</div>

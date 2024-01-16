@@ -1,0 +1,66 @@
+﻿@model StoreTanPhat.Models.DatHang
+
+@{
+    ViewBag.Title = "SỬA ĐẶT HÀNG";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ID_DatHang)
+
+            @Html.HiddenFor(m => m.ID_KhachHang)
+
+            @Html.HiddenFor(m => m.PhiShip)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DiaChiGiaoHang, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.DiaChiGiaoHang, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DiaChiGiaoHang, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.HoTenNguoiNhan, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.HoTenNguoiNhan, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HoTenNguoiNhan, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SoDienThoai, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.SoDienThoai, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.HiddenFor(m => m.NgayLap)
+            @Html.HiddenFor(m => m.TongTien)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TinhTrangDonHang)
+                @Html.DropDownListFor(model => model.TinhTrangDonHang, new SelectList(new[] {
+                    new SelectListItem {Value = null, Text = "-- Chọn --" },
+                     new SelectListItem {Value = "2", Text = "Đã hủy" },
+                    new SelectListItem {Value = "3", Text = "Đang đóng gói" },
+                     new SelectListItem {Value = "4", Text = "Đang gửi vận chuyển" },
+                    new SelectListItem {Value = "5", Text = "Đang chuyển" },
+                     new SelectListItem {Value = "6", Text = "Thất bại" },
+                    new SelectListItem {Value = "7", Text = "Đang chuyển hoàn" },
+                     new SelectListItem {Value = "8", Text = "Đã chuyển hoàn" },
+                    new SelectListItem {Value = "9", Text = "Chờ Xác Thực" },
+                    new SelectListItem {Value = "10", Text = "Thành công" },
+                }, "Value", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TinhTrangDonHang, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="CẬP NHẬT" class="btn btn-outline-primary" /> hoặc <span class="btn btn-info">@Html.ActionLink("Trở về danh sách", "Index")</span>
+                </div>
+            </div>
+        }
+    </div>
+</div>

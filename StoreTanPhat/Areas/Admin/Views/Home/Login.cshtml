@@ -1,0 +1,63 @@
+﻿@model StoreTanPhat.Models.LoginNhanVien
+@{
+    ViewBag.Title = "Đăng nhập hệ thống";
+}
+<html>
+<head>
+    <script src="~/Libary/ckeditor/ckeditor.js"></script>
+    <!--MDBOOSTRAP-->
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.css"
+          rel="stylesheet" />
+    <!-- MDB -->
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"></script>
+    <style>
+        body #page-top {
+            margin-top: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="margin-top:250px;">
+        <div class="card mt-3 border border-primary shadow">
+            <h5 class="card-header bg-primary text-white">@ViewBag.Title</h5>
+            <div class="card-body">
+                @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+                {
+                    if (ViewBag.Error != null)
+                    {
+                        <span class="text-danger" style="font-weight:bold;.0">@ViewBag.Error</span>
+                    }
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TenDangNhapNV)
+                        @Html.EditorFor(model => model.TenDangNhapNV, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TenDangNhapNV, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MatKhauNV)
+                        @Html.EditorFor(model => model.MatKhauNV, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MatKhauNV, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Đăng nhập" class="btn btn-primary" style="font-weight:bold;" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+

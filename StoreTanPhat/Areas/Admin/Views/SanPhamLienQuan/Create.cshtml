@@ -1,0 +1,47 @@
+﻿@model StoreTanPhat.Models.SanPhamLienQuan
+
+@{
+    ViewBag.Title = "THÊM SẢN PHẨM";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    a{
+        color:white;
+    }
+    a:hover{
+        color:white;
+    }
+</style>
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        @if (ViewBag.Error != null)
+        {
+            <span class="badge bg-danger text-white">@ViewBag.Error</span>
+        }
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>SanPhamLienQuan</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ID_SanPham, "ID_SanPham", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.DropDownList("ID_SanPham", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ID_SanPham, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-primary text-white" /> hoặc <span class="btn btn-info">@Html.ActionLink("Back to List", "Index")</span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

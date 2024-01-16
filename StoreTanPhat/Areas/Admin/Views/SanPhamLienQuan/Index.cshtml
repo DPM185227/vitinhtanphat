@@ -1,0 +1,45 @@
+﻿@model IEnumerable<StoreTanPhat.Models.SanPhamLienQuan>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <p class="btn btn-primary">
+            @Html.ActionLink("Thêm Mới", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.SanPham.TenSanPham)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Slider.TenSilder)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SanPham.TenSanPham)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Slider.TenSilder)
+                    </td>
+                    <td>
+                        <a class="btn btn-danger text-white" href="@Url.Action("Delete", "SanPhamLienQuan", new { id = item.ID_SPLQ })">Xóa</a>
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+</div>
+

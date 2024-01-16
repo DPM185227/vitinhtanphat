@@ -1,0 +1,65 @@
+﻿@model StoreTanPhat.Models.KhachHangLogin
+@{
+    ViewBag.Title = "Đăng nhập hệ thống";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["ActiveAccount"] != null)
+{
+    <script>
+        window.alert("@TempData["ActiveAccount"]");
+        @TempData.Remove("ActiveAccount");
+    </script>
+}
+@if (TempData["ThongBao"] != null)
+{
+<script>
+        window.alert("@TempData["ThongBao"]");
+         @TempData.Remove("ThongBao");
+</script>
+}
+<div class="container mt-4 mb-4">
+    <div class="card border border-primary shadow">
+        <h5 class="card-header bg-primary text-white text-center">@ViewBag.Title</h5>
+        <div class="card-body">
+            @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+            {
+                if (ViewBag.Error != null)
+                {
+                    <span class="text-danger badge bg-danger text-white mb-3" style="font-weight:bold;font-size:15px;">@ViewBag.Error</span>
+                }
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TenDangNhap)
+                    @Html.EditorFor(model => model.TenDangNhap, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TenDangNhap, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MatKhau)
+                    @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group mt-3">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Đăng nhập" class="btn btn-primary" style="font-weight:bold;" />
+                        OR
+                        <a href="@Url.Action("DangKy","Home")" id="Register" class="btn btn-primary">Đăng ký tài khoản</a>
+                        <a href="@Url.Action("Forgot_password","Home")" class="btn btn-primary">Quên mật khẩu?</a>
+                    </div>
+                </div>
+
+                <h5 id="showDangKy"></h5>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(() => {
+        $("#Register").click(() => {
+        })
+    })
+</script>
+

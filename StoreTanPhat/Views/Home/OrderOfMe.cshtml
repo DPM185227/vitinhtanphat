@@ -1,0 +1,110 @@
+﻿@using StoreTanPhat.Models;
+@model ICollection<StoreTanPhat.Models.DatHang>
+@{ 
+    var order_deatils = (List<DatHangChiTiet>)ViewBag.DatHangChiTiet;
+}
+<form>
+    <div class="card mt-3 border-warning">
+        <h5 class="card-header bg-warning" style="font-weight:bold;">Đơn hàng</h5>
+        <div class="card-body">
+            <div class="row">
+                <a class="bg-primary ml-2 text-white col-3" style="width: 180px; line-height: 40px; text-align: center;">
+                    Đơn hàng mới <span class="badge badge-light">@Model.Where(m => m.TinhTrangDonHang == 0).ToList().Count()</span>
+                </a>
+
+                <a class="bg-danger ml-2 text-white col-3" style="width: 180px; line-height: 40px; text-align: center; ">
+                    Đơn hàng đã hủy <span class="badge badge-light">@Model.Where(m => m.TinhTrangDonHang == 2).ToList().Count()</span>
+                </a>
+
+                <a class="bg-danger ml-2 text-white col-3" style="width:180px;line-height:40px;text-align:center;">
+                    Đơn hàng đang giao <span class="badge badge-light">@Model.Where(m => m.TinhTrangDonHang == 4).ToList().Count()</span>
+                </a>
+
+                <a class="bg-info ml-2 text-white col-3" style="width:180px;line-height:40px;text-align:center;">
+                    Đơn hàng đã nhận <span class="badge badge-light">@Model.Where(m => m.TinhTrangDonHang == 9).ToList().Count()</span>
+                </a>
+            </div>
+            <div class="row mt-3">
+                @foreach (var item in Model)
+                {
+                    <div class="col-3 mt-2">
+                        <div class="card border border-warning shadow">
+                            <h5 class="card-header bg-danger text-white">@item.ID_DatHang</h5>
+                            <div class="card-body">
+                                @{
+                                    // lấy đặt hàng chi tiết đầu tiên
+                                    var order_one = order_deatils.Where(m => m.ID_DatHang == item.ID_DatHang).FirstOrDefault();
+                                }
+                                @if (order_one != null)
+                                {
+                                    <img src="~/@order_one.SanPham.HinhAnhDaiDien" width="150" />
+                                }
+                                <p class="card-text">Khách hàng :<b>@item.HoTenNguoiNhan</b></p>
+                                <p class="card-text">Số lượng sản phẩm :<b>@order_deatils.Where(m => m.ID_DatHang == item.ID_DatHang).Count()</b></p>
+                                <p class="card-text">Ngày đặt hàng :<b>@item.NgayLap</b></p>
+                                <p class="card-text">Tổng tiền:<b> @item.TongTien.ToString("N0")đ</b></p>
+                                <hr />
+                                <div>
+                                    @if (item.TinhTrangDonHang == 0)
+                                    {
+                                        <span class="badge badge-info shadow" style="line-height:25px;width:150px;text-align:center;font-size:15px;">Đơn hàng mới</span>
+                                    }
+                                    else if (item.TinhTrangDonHang == 1)
+                                    {
+                                        <span class="badge badge-success shadow" style="line-height:25px;width:150px;text-align:center;font-size:15px;">Đã xác nhận</span>
+                                    }
+                                    else if (item.TinhTrangDonHang == 2)
+                                    {
+                                        <span class="badge badge-danger shadow" style="line-height:25px;width:150px;text-align:center;font-size:15px;">Đã hủy</span>
+                                    }
+                                    else if (item.TinhTrangDonHang == 3)
+                                    {
+                                        <span class="badge badge-warning shadow" style="line-height:25px;width:150px;text-align:center;font-size:15px;">Đang đóng gói</span>
+                                    }
+                                    else if (item.TinhTrangDonHang == 4)
+                                    {
+                                        <span class="badge badge-warning shadow" style="line-height:25px;width:150px;text-align:center;font-size:15px;">Đang gửi vận chuyển</span>
+                                    }
+                                    else if (item.TinhTrangDonHang == 5)
+                                    {
+                                        <span class="badge badge-primary shadow" style="line-height:25px;width:150px;text-align:center;font-size:15px;">Đang chuyển</span>
+                                    }
+                                    else if (item.TinhTrangDonHang == 6)
+                                    {
+                                        <span class="badge badge-danger shadow" style="line-height:25px;width:150px;text-align:center;font-size:15px;">Thất bại</span>
+                                    }
+                                    else if (item.TinhTrangDonHang == 7)
+                                    {
+                                        <span class="badge badge-warning shadow" style="line-height:25px;width:150px;text-align:center;font-size:15px;">Đang chuyển hoàn</span>
+                                    }
+                                    else if (item.TinhTrangDonHang == 8)
+                                    {
+                                        <span class="badge badge-success shadow" style="line-height:25px;width:150px;text-align:center;font-size:15px;">Đã chuyển hoàn</span>
+                                    }
+                                    else if (item.TinhTrangDonHang == 9)
+                                    {
+                                        <span class="badge badge-primary shadow" style="line-height:25px;width:150px;text-align:center;font-size:15px;">Chờ Xác Thực</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-primary shadow" style="line-height:25px;width:150px;text-align:center;font-size:15px;">Thành công</span>
+                                    }
+                                </div>
+                                <hr />
+                                @if (item.TinhTrangDonHang == 0)
+                                {
+                                    <a class="btn btn-danger text-white" href="@Url.Action("CancelOrder","Home",new { id = item.ID_DatHang})">Hủy</a>
+                                }
+                                @if (item.TinhTrangDonHang != 2)
+                                {
+                                    <a class="btn btn-primary text-white" href="@Url.Action("OrderDetail","Home",new { id = item.ID_DatHang})">Chi tiết</a>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</form>

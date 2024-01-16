@@ -1,0 +1,107 @@
+﻿@model IEnumerable<StoreTanPhat.Models.BinhLuan>
+@using StoreTanPhat.Models;
+@{
+    ViewBag.Title = "QUẢN LÝ BÌNH LUẬN";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NoiDung)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NgayBinhLuan)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HinhAnh)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HienThi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Star)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.KhachHang.HoTen)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SanPham.TenSanPham)
+                </th>
+                <th>
+                    Phản hồi
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NoiDung)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayBinhLuan)
+                    </td>
+                    <td>
+                        @if (item.HinhAnh != null)
+                        {
+                            <img src="~/@item.HinhAnh" width="100" />
+                        }
+                        else
+                        {
+                            <img src="~/Images/Comment/unnamed.jpg" width="100"/>
+                        }
+                    </td>
+                    <td>
+                        @if (item.HienThi == 0)
+                        {
+                            <span class="badge bg-secondary">Mới</span>
+                        }
+                        else if (item.HienThi == 1)
+                        {
+                            <span class="badge bg-primary">Đã xét</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Đã ẩn</span>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Star)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KhachHang.HoTen)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SanPham.TenSanPham)
+                    </td>
+                    <td>
+                        @{
+                            var phanHoi = (List<PhanHoiBinhLuan>)ViewBag.phanHoi;
+                            var checkPhanHoi = phanHoi.Where(m => m.ID_BinhLuan == item.ID_BinhLuan).FirstOrDefault();
+                            var coutPhanHoi = phanHoi.Where(m => m.ID_BinhLuan == item.ID_BinhLuan).Count();
+                        }
+                        <a class="btn btn-info text-white" href="@Url.Action("Index", "PhanHoiBinhLuan", new { id = item.ID_BinhLuan })">@coutPhanHoi Phản Hồi</a>
+                    </td>
+                    <td>
+                        @if (checkPhanHoi != null)
+                        {
+                            <a class="btn btn-info text-white" href="@Url.Action("Edit", "BinhLuan", new { id = item.ID_BinhLuan })">Sửa</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-info text-white" href="@Url.Action("Edit", "BinhLuan", new { id = item.ID_BinhLuan })">Sửa</a> <span> |</span>
+                            <a class="btn btn-danger text-white" href="@Url.Action("Delete", "BinhLuan", new { id = item.ID_BinhLuan })">Xóa</a>
+                        }
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+

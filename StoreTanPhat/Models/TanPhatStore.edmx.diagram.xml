@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f92536c21cd341ed9dfdfa3c926aa855" Name="Diagram1">
+        <EntityTypeShape EntityType="ShopTanPhatModel.BaiViet" Width="1.5" PointX="3" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.BinhLuan" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.Contact" Width="1.5" PointX="8.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.DanhMucSanPham" Width="1.5" PointX="1.5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.DanhMucSanPhamCon" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.DatHang" Width="1.5" PointX="6" PointY="22.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.DatHangChiTiet" Width="1.5" PointX="8.25" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.DiaChiKhachHang" Width="1.5" PointX="17.5" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.Footer" Width="1.5" PointX="10.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.GioHang" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.HinhAnhSanPham" Width="1.5" PointX="5.25" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.Huyen" Width="1.5" PointX="13" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.KhachHang" Width="1.5" PointX="3" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.MaGiamGia" Width="1.5" PointX="12.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.NhanVien" Width="1.5" PointX="0.75" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.PhanHoiBinhLuan" Width="1.5" PointX="6" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.PhiVanChuyen" Width="1.5" PointX="17.5" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.SanPham" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.SanPhamLienQuan" Width="1.5" PointX="8.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.Slider" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.Tinh" Width="1.5" PointX="10.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.ThuongHieu" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.Xa" Width="1.5" PointX="15.25" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopTanPhatModel.YeuThich" Width="1.5" PointX="8.25" PointY="12" IsExpanded="true" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__BaiViet__Id_Nhan__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__BinhLuan__ID_Kha__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__BinhLuan__ID_San__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__PhanHoiBi__ID_Bi__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__DanhMucSa__ID_Da__145C0A3F" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__SanPham__ID_Danh__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__DatHang__ID_Khac__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__DatHangCh__ID_Da__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__DatHangCh__ID_Sa__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__DiaChiKha__ID_Hu__239E4DCF" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__DiaChiKha__ID_Kh__21B6055D" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__DiaChiKha__ID_Ti__22AA2996" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__DiaChiKha__ID_Xa__24927208" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__GioHang__ID_Khac__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__GioHang__ID_SanP__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__HinhAnhSa__ID_Sa__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__Huyen__matp__1BFD2C07" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__PhiVanChu__ID_Hu__4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__Xa__maqh__1ED998B2" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__PhanHoiBi__ID_Kh__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__YeuThich__Id_Kha__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__PhanHoiBi__ID_Nh__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__SanPham__ID_Nhan__2B3F6F97" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__PhiVanChu__ID_Ti__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__PhiVanChu__ID_Xa__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__SanPham__ID_Thuo__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__SanPhamLi__ID_Sa__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__YeuThich__Id_San__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopTanPhatModel.FK__SanPhamLi__ID_Sl__59063A47" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,90 @@
+﻿@model IEnumerable<StoreTanPhat.Models.BaiViet>
+
+@{
+    ViewBag.Title = "QUẢN LÝ BÀI VIẾT";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    a{
+        color:white;
+    }
+    a:hover{
+        color:white;
+    }
+</style>
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <p class="btn btn-primary">
+            @Html.ActionLink("Thêm Mới", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TieuDe)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MieuTaNgan)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LuotXem)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HinhAnh)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.XetDuyet)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NhanVien.TenNhanVien)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TieuDe)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MieuTaNgan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LuotXem)
+                    </td>
+                    <td>
+                        <img src="~/@item.HinhAnh"  width="100"/>
+                    </td>
+                    <td>
+                        @if (item.XetDuyet == 0)
+                        {
+                            <span class="badge bg-primary">Đang chờ xét</span>
+                        }
+                        else if (item.XetDuyet == 1)
+                        {
+                            <span class="badge bg-success">Đã được duyệt</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Từ chối</span>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NhanVien.TenNhanVien)
+                    </td>
+                    <td>
+                        <!--truyền id qua Hàm Edit-->
+                        <a class="btn btn-info text-white" href="@Url.Action("Edit", "BaiViet", new { id = item.Id_BaiViet })">Sửa</a> <span>|</span>
+                        <!--truyền id qua Hàm Delete-->
+                        <a class="btn btn-danger text-white" href="@Url.Action("Delete", "BaiViet", new { id = item.Id_BaiViet })">Xóa</a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+

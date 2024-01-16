@@ -1,0 +1,169 @@
+﻿@using StoreTanPhat.Models;
+@model IEnumerable<StoreTanPhat.Models.SanPham>
+@{
+    ViewBag.Title = "Store";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var yeuthich = (List<YeuThich>)ViewBag.YeuThich;
+}
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- ASIDE -->
+            <div id="aside" class="col-md-3">
+                @using (Html.BeginForm("FitterCateChild", "Home", FormMethod.Post))
+                {
+                    <!-- Danh Mục -->
+                    <div class="aside">
+                        <h3 class="aside-title">DANH MỤC</h3>
+                        <div class="checkbox-filter">
+                            @{
+                                var list_cate = (List<DanhMucSanPhamCon>)ViewBag.CateChid;
+                            }
+                            @foreach (var item in list_cate)
+                            {
+                                <div class="input-checkbox">
+                                    <input type="radio" id="category" name="cateChild" value="@item.ID_DMSPC">
+                                    <label for="category-1">
+                                        <span></span>
+                                        @item.TenDMSPC
+                                        @{
+                                            int count_cate = Model.Where(m => m.DanhMucSanPhamCon.ID_DMSPC == item.ID_DMSPC).Count();
+                                        }
+                                        <small>(@count_cate)</small>
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <!-- /aside Widget -->
+                    <!--Thương hiệu-->
+                    <div class="aside">
+                        <h3 class="aside-title">THUƠNG HIỆU</h3>
+                        <div class="checkbox-filter">
+                            @{
+                                var list_brand = (List<ThuongHieu>)ViewBag.Brand;
+                            }
+                            @foreach (var item in list_brand)
+                            {
+                                <div class="input-checkbox">
+                                    <input type="radio" id="brand" name="Brand" value="@item.ID_ThuongHieu">
+                                    <label for="brand-1">
+                                        <span></span>
+                                        @item.TenThuongHieu
+                                        @{
+                                            var count_brand = Model.Count(m => m.ID_ThuongHieu == item.ID_ThuongHieu);
+                                        }
+                                        <small>(@count_brand)</small>
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <input type="hidden" value="@Session["id_DanhMuc"]" name="id" />
+                    <input type="submit" value="Lọc" />
+                    <!-- /aside Widget -->
+                    <!-- aside Widget -->
+                    <div class="aside">
+                        <h3 class="aside-title">TOP KHUYẾN MÃI</h3>
+                        @{
+                            var list_products = (List<SanPham>)ViewBag.Products;
+                        }
+                        @foreach (var item in list_products.OrderByDescending(m => m.GiaKhuyenMai - m.GiaBan).Take(3).ToList())
+                        {
+                            <div class="product-widget">
+                                <div class="product-img">
+                                    <img src="~/@item.HinhAnhDaiDien" alt="">
+                                </div>
+                                <div class="product-body">
+                                    <p class="product-category">@item.DanhMucSanPhamCon.DanhMucSanPham.TenDanhMuc</p>
+                                    <h3 class="product-name"><a href="@Url.Action("QuickView", "Home", new { id = item.ID_SanPham })">@item.TenSanPham.</a></h3>
+                                    <h4 class="product-price">
+                                        @item.GiaBan.ToString("N0")đ
+                                        @if (item.GiaKhuyenMai != null)
+                                        {
+
+                                            <del class="product-old-price">@item.GiaKhuyenMai.Value.ToString("N0")đ</del>
+                                        }
+                                    </h4>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <!-- /aside Widget -->
+                }
+            </div>
+                <!-- /ASIDE -->
+                <!-- STORE -->
+                <div id="store" class="col-md-8">
+                    <!-- store top filter -->
+                    <!-- /store top filter -->
+                    <!-- store products -->
+                    <div class="row">
+                        <!-- product -->
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-md-4 col-xs-6">
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="~/@item.HinhAnhDaiDien" alt="" width="500" height="250">
+                                        <div class="product-label">
+                                            @{
+                                                int khuyenmai = (int)(item.GiaKhuyenMai) / item.GiaBan;
+                                            }
+                                            <span class="sale">-@khuyenmai%</span>
+                                            <span class="new">NEW</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-body">
+                                        <p class="product-category">@item.DanhMucSanPhamCon.DanhMucSanPham.TenDanhMuc</p>
+                                        <h3 class="product-name"><a href="@Url.Action("QuickView","Home", new { id = item.ID_SanPham})">@item.TenSanPham</a></h3>
+                                        <h4 class="product-price">
+                                            @item.GiaBan.ToString("N0")đ
+                                            @if (item.GiaKhuyenMai != null)
+                                            {
+                                                <del class="product-old-price">@item.GiaKhuyenMai.Value.ToString("N0")đ</del>
+                                            }
+                                        </h4>
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <div class="product-btns">
+                                            @{
+                                                var favorite_sale = yeuthich.Where(m => m.Id_SanPham == item.ID_SanPham).FirstOrDefault();
+                                            }
+                                            @if (favorite_sale == null)
+                                            {
+                                                <button onclick="location.href='@Url.Action("AddYeuThichCate","Home",new { id = item.ID_SanPham})'" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Yêu Thích</span></button>
+                                            }
+                                            else
+                                            {
+                                                <button onclick="location.href='@Url.Action("DeleteYeuThichCate", "Home", new { id = favorite_sale.Id_YeuThich })'" class="add-to-wishlist"><i class="fa fa-heart"></i><span class="tooltipp">Bỏ Yêu Thích</span></button>
+                                            }
+                                            <button onclick="location.href='@Url.Action("QuickView","Home",new{ id = item.ID_SanPham })'" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">Chi Tiết</span></button>
+                                        </div>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <button onclick="location.href='@Url.Action("AddToCart", "Home", new { id = item.ID_SanPham })'" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <!-- store bottom filter -->
+                        <!-- /store bottom filter -->
+                    </div>
+                    <!-- /STORE -->
+                </div>
+                <!-- /row -->
+                }
+            </div>
+        <!-- /container -->
+    </div>
+</div>
+<!-- /SECTION -->

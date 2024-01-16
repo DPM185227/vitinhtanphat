@@ -1,0 +1,89 @@
+﻿@model IEnumerable<StoreTanPhat.Models.DanhMucSanPhamCon>
+@using StoreTanPhat.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var list_product = (List<SanPham>)ViewBag.Product;
+}
+
+<style>
+    a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        a:hover {
+            color: white;
+            text-decoration: none;
+        }
+</style>
+<div class="card mt-3 border border-success shadow">
+    <h5 class="card-header bg-success text-white">@ViewBag.Title</h5>
+    <div class="card-body">
+        <p class="btn btn-primary text-white">
+            @Html.ActionLink("Tạo mới", "Create")
+        </p>
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TenDMSPC)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TinhTrangHienThi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HinhAnh)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model=> model.DanhMucSanPham.TenDanhMuc)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenDMSPC)
+                    </td>
+                    <td>
+                        @if (item.TinhTrangHienThi == 0)
+                        {
+                            <span>Ẳn đi</span>
+                        }
+                        else
+                        {
+                            <span>Hiện ra</span>
+                        }
+                    </td>
+                    <td>
+                        <img src="~/@item.HinhAnh" width="100" />
+                    </td>
+                    <td>
+                        <span class="badge bg-primary text-white">@item.TenDMSPC</span>
+                    </td>
+                    <td>
+                        @{
+                            var count_list = list_product.Where(m => m.ID_DanhMucSanPhamCon == item.ID_DMSPC).FirstOrDefault();
+                        }
+                        @if (count_list != null)
+                        {
+                            <!--truyền id qua Hàm Edit-->
+                            <a class="btn btn-info text-white" href="@Url.Action("Edit", "DanhMucSanPhamCon", new { id = item.ID_DMSPC })">Sửa</a>
+                        }
+                        else
+                        {
+                            <!--truyền id qua Hàm Edit-->
+                            <a class="btn btn-info text-white" href="@Url.Action("Edit", "DanhMucSanPhamCon", new { id = item.ID_DMSPC })">Sửa</a> <span>|</span>
+                            <a class="btn btn-danger text-white" href="@Url.Action("Delete", "DanhMucSanPhamCon", new { id = item.ID_DMSPC })">Xóa</a>
+                        }
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

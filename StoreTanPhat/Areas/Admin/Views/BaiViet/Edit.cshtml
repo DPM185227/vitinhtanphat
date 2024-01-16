@@ -1,0 +1,74 @@
+﻿@model StoreTanPhat.Models.BaiViet
+
+@{
+    ViewBag.Title = "SỬA BÀI VIẾT";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        @using (Html.BeginForm("Edit", "BaiViet", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id_BaiViet)
+            @Html.HiddenFor(m => m.LuotXem)
+            @Html.HiddenFor(m => m.Id_NhanVien)
+            <div class="form-group">
+                @Html.LabelFor(model => model.TieuDe, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.TieuDe, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TieuDe, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MieuTaNgan, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.MieuTaNgan, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MieuTaNgan, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DuLieuHinhAnh)
+                <br />
+                @Html.TextBoxFor(model => model.DuLieuHinhAnh, new { @class = "form-control-file", type = "file" })
+                @Html.ValidationMessageFor(model => model.DuLieuHinhAnh, "", new { @class = "text-danger" })
+                <input name="OldImage" value="@Model.HinhAnh" type="hidden" />
+                <br />
+                @if (ViewBag.Error != null)
+                {
+                    <p class="badge rounded-pill badge-danger text-danger" style="font-size:15px;font-weight:bold">@ViewBag.Error</p>
+                }
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NoiDung, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.TextAreaFor(model => model.NoiDung, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NoiDung, "", new { @class = "text-danger" })
+                <script>
+                   // đặt ID cho đối tượng nào
+                    CKEDITOR.replace(@Html.IdFor(model => model.NoiDung), {
+                    height: 200
+                });
+                </script>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.XetDuyet)
+                @Html.DropDownListFor(model => model.XetDuyet, new SelectList(new[] {
+                    new SelectListItem {Value = null, Text = "-- Chọn --" },
+                    new SelectListItem {Value = "0", Text = "Chờ Xét Duyệt" },
+                    new SelectListItem {Value = "1", Text = "Đã Xét Duyệt" },
+                    new SelectListItem {Value = "2", Text = "Từ chối" },
+                }, "Value", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.XetDuyet, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Cập Nhật" class="btn btn-default" /> hoặc <span class="btn btn-info">@Html.ActionLink("Trở về danh sách", "Index")</span>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

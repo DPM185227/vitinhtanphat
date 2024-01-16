@@ -1,0 +1,122 @@
+﻿@model IEnumerable<StoreTanPhat.Models.DatHang>
+
+@{
+    ViewBag.Title = "QUẢN LÝ ĐẶT HÀNG";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="card border-primary">
+    <h5 class="card-header bg-primary text-white">@ViewBag.Title</h5>
+    <div class="card-body">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhiShip)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DiaChiGiaoHang)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HoTenNguoiNhan)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoDienThoai)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NgayLap)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TongTien)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TinhTrangDonHang)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhiShip)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiaChiGiaoHang)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HoTenNguoiNhan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoDienThoai)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayLap)
+                    </td>
+                    <td>
+                        @item.TongTien.ToString("N0")<span>đ</span>
+                    </td>
+                    <td>
+                        @if (item.TinhTrangDonHang == 0)
+                        {
+                            <span>Đơn hàng mới</span>
+                        }
+                        else if (item.TinhTrangDonHang == 1)
+                        {
+                            <span>Đã xác nhận</span>
+                        }
+                        else if (item.TinhTrangDonHang == 2)
+                        {
+                            <span>Đã hủy</span>
+                        }
+                        else if (item.TinhTrangDonHang == 3)
+                        {
+                            <span>Đang đóng gói</span>
+                        }
+                        else if (item.TinhTrangDonHang == 4)
+                        {
+                            <span>Đang gởi vận chuyển</span>
+                        }
+                        else if (item.TinhTrangDonHang == 5)
+                        {
+                            <span>Đang chuyển</span>
+                        }
+                        else if (item.TinhTrangDonHang == 6)
+                        {
+                            <span>Thất bại</span>
+                        }
+                        else if (item.TinhTrangDonHang == 7)
+                        {
+                            <span>Đang chuyển hoàn</span>
+                        }
+                        else if (item.TinhTrangDonHang == 8)
+                        {
+                            <span>Đã chuyển hoàn</span>
+                        }
+                        else if (item.TinhTrangDonHang == 9)
+                        {
+                            <span>Chờ xác thực</span>
+                        }
+                        else
+                        {
+                            <span>Thành công</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.TinhTrangDonHang != 2)
+                        {
+                            <a class="btn btn-primary" href="@Url.Action("Index","DatHangChiTiet", new { id = item.ID_DatHang })">Chi Tiết</a>
+                        }
+                    </td>
+
+                    <td>
+                        @if (item.TinhTrangDonHang != 2 || item.TinhTrangDonHang == 9)
+                        {
+                            <a class="btn btn-info" href="@Url.Action("Edit", "DatHang", new { id = item.ID_DatHang })">Sửa</a>
+                        }
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+
